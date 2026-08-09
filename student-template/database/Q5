@@ -1,0 +1,32 @@
+JSON
+
+
+[
+  {
+    "id": "sup-001",
+    "name": "Acme Industrial Supplies",
+    "category": "Raw Materials",
+    "totalOrders": 142,
+    "onTimeDeliveryRate": 96.5,
+    "avgResponseTimeHours": 14.2,
+    "lastOrderDate": "2026-08-05T10:30:00Z"
+  },
+  {
+    "id": "sup-002",
+    "name": "Global Tech Components",
+    "category": "Electronics",
+    "totalOrders": 89,
+    "onTimeDeliveryRate": 82.0,
+    "avgResponseTimeHours": 36.5,
+    "lastOrderDate": "2026-08-07T14:15:00Z"
+  },
+  {
+    "id": "sup-003",
+    "name": "Apex Logistics & Freight",
+    "category": "Packaging",
+    "totalOrders": 54,
+    "onTimeDeliveryRate": 68.4,
+    "avgResponseTimeHours": 58.0,
+    "lastOrderDate": "2026-08-01T09:00:00Z"
+  }
+]
