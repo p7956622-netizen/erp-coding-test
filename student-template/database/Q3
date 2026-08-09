@@ -1,0 +1,54 @@
+import React, { useState, useEffect } from 'react';
+
+export default function Dashboard() {
+  const [alerts, setAlerts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchAlerts = async () => {
+      try {
+        const response = await fetch('/api/inventory/alerts');
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: Failed to fetch inventory alerts`);
+        }
+        const data = await response.json();
+        setAlerts(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAlerts();
+  }, []);
+
+  if (loading) return <p>Loading inventory alerts...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!alerts.length) return <p>All inventory levels are healthy.</p>;
+
+  return (
+    <div className="dashboard-widget">
+      <h2>Low Stock Inventory Alerts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Reorder Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          {alerts.map((item) => (
+            <tr key={item.id || item.productName}>
+              <td>{item.productName}</td>
+              <td>{item.quantity}</td>
+              <td>{item.reorderLevel}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
