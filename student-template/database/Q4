@@ -1,0 +1,59 @@
+YAML
+
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Frontend Build & Test
+  # ---------------------------------------------------------------------------
+  frontend:
+    name: Frontend (Node.js)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+  # ---------------------------------------------------------------------------
+  # Backend Testing (Choose Python OR Java below)
+  # ---------------------------------------------------------------------------
+  backend-python:
+    name: Backend (Python Pytest)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest
+
+      - name: Run Pytest
+        run: python -m pytest
